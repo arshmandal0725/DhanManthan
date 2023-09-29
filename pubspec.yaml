@@ -39,6 +39,18 @@ dependencies:
   google_fonts: ^6.1.0
   firebase_auth: ^4.10.0
   firebase_core: ^2.16.0
+  animated_bottom_navigation_bar: ^1.3.0
+  carousel_slider: ^4.2.1
+  draw_graph: ^1.0.0
+  stacked_card_carousel: ^0.0.4
+  uuid: ^4.1.0
+  intl: ^0.18.1
+  firebase_database: ^10.2.6
+  http: ^1.1.0
+  webfeed_revised: ^0.7.2
+  cached_network_image: ^3.3.0
+  
+  
   
 
 
@@ -70,6 +82,15 @@ flutter:
     - assets/images/dhan_manthan-removebg-preview (1).png
     - assets/images/9070e74c-e120-4ae8-a15f-3e8f657f1642.png
     - assets/images/7b6f8bdf-b76e-4e95-8b9a-886a13f4acae.png
+    - assets/images/dhan_manthan__4_-removebg-preview.png
+    - assets/images/20230928_113003_0000 (1).png
+    - assets/images/a57bbd9c-4117-42ee-829e-ecff55aa8139.png
+    - assets/images/8e7e801a-5262-49d2-b691-c92c36a27cbb.png
+    - assets/images/9308bbc2-4058-4f60-bf12-0cf66c669a66.png
+    - assets/images/ad24f3e4-2a4d-4a1a-ba82-0a82627e208c.png
+    - assets/images/bf2b212e-6678-4589-a716-e185f09a030a.png
+    - assets/images/dhan_manthan__3_-removebg-preview.png
+    - assets/images/22acaa70-2890-4e0d-8dac-26fafd2c766a.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

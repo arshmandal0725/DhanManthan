@@ -1,34 +1,57 @@
+import 'dart:convert';
+
 import 'package:dhan_manthan/homeScreen.dart';
-import 'package:dhan_manthan/login_signup.dart';
-import 'package:dhan_manthan/personal_details_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
-class SignLog extends StatefulWidget {
-  const SignLog({super.key});
+class PersonalData extends StatefulWidget {
+  const PersonalData(
+      {super.key, required this.emailAdress, required this.passWord});
+  final String emailAdress;
+  final String passWord;
 
   @override
-  State<SignLog> createState() => _SignLogState();
+  State<PersonalData> createState() => _PersonalDataState();
 }
 
 final _formKey = GlobalKey<FormState>();
-String? _emailAdress;
-String? _passWord1;
-String? _passWord2;
+String? _name;
+String? _phoneNumber;
+String? _gender;
 final auth = FirebaseAuth.instance;
 
-class _SignLogState extends State<SignLog> {
+class _PersonalDataState extends State<PersonalData> {
+  void storeData() {
+    final url = Uri.https(
+        'dhan-manthan-default-rtdb.firebaseio.com', 'PersonalData.json');
+    http.post(url,
+        body: json.encode({
+          'name': _name,
+          'phone number': _phoneNumber,
+          'gender': _gender,
+          'modules': 0,
+          'email': widget.emailAdress,
+        }));
+  }
+
   @override
   Widget build(BuildContext context) {
-    void next() async {
+    void SignUp() async {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        if (_passWord1 == _passWord2) {
-          Get.off(() =>
-              PersonalData(emailAdress: _emailAdress!, passWord: _passWord1!));
-        } else {
-          Get.snackbar('Error Occured', 'Both Passwords are not same');
+
+        try {
+          final userCredentials = await auth
+              .createUserWithEmailAndPassword(
+                  email: widget.emailAdress, password: widget.passWord)
+              .then((value) {
+            storeData();
+            Get.off(() => const HomeScreen());
+          });
+        } on FirebaseAuthException catch (error) {
+          Get.snackbar('Error Occurred', '${error.message}');
         }
       }
     }
@@ -93,7 +116,7 @@ class _SignLogState extends State<SignLog> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             const Text(
-                              'Sign Up',
+                              'Person Details',
                               style: TextStyle(
                                   fontSize: 35, fontWeight: FontWeight.bold),
                             ),
@@ -102,15 +125,13 @@ class _SignLogState extends State<SignLog> {
                             ),
                             TextFormField(
                               validator: (value) {
-                                if (value == null ||
-                                    value.isEmpty ||
-                                    !value.contains('@')) {
-                                  return 'Enter Vallid Email Adress';
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter Vallid Name';
                                 }
                                 return null;
                               },
                               onSaved: (newValue) {
-                                _emailAdress = newValue;
+                                _name = newValue;
                               },
                               decoration: InputDecoration(
                                 filled: true,
@@ -118,7 +139,7 @@ class _SignLogState extends State<SignLog> {
                                     const Color.fromARGB(76, 236, 233, 233),
                                 prefixIcon:
                                     const Icon(Icons.account_circle_outlined),
-                                label: const Text('Email'),
+                                label: const Text('Name'),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(36)),
                               ),
@@ -130,22 +151,20 @@ class _SignLogState extends State<SignLog> {
                                 validator: (value) {
                                   if (value == null ||
                                       value.isEmpty ||
-                                      value.length < 6) {
-                                    return 'Enter Vallid PassWord';
+                                      value.length < 10) {
+                                    return 'Enter Vallid Phone Number';
                                   }
                                   return null;
                                 },
                                 onSaved: (newValue) {
-                                  _passWord1 = newValue;
+                                  _phoneNumber = newValue;
                                 },
                                 decoration: InputDecoration(
-                                  suffixIcon:
-                                      const Icon(Icons.remove_red_eye_outlined),
                                   filled: true,
                                   fillColor:
                                       const Color.fromARGB(76, 236, 233, 233),
-                                  prefixIcon: const Icon(Icons.lock_outlined),
-                                  label: const Text('Password'),
+                                  prefixIcon: const Icon(Icons.phone_android),
+                                  label: const Text('Phone Number'),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(36)),
                                 )),
@@ -154,24 +173,21 @@ class _SignLogState extends State<SignLog> {
                             ),
                             TextFormField(
                                 validator: (value) {
-                                  if (value == null ||
-                                      value.isEmpty ||
-                                      value.length < 6) {
+                                  if (value == null || value.isEmpty) {
                                     return 'Enter Vallid PassWord';
                                   }
+
                                   return null;
                                 },
                                 onSaved: (newValue) {
-                                  _passWord2 = newValue;
+                                  _gender = newValue;
                                 },
                                 decoration: InputDecoration(
-                                  suffixIcon:
-                                      const Icon(Icons.remove_red_eye_outlined),
                                   filled: true,
                                   fillColor:
                                       const Color.fromARGB(76, 236, 233, 233),
-                                  prefixIcon: const Icon(Icons.lock_outlined),
-                                  label: const Text('Confirm Password'),
+                                  prefixIcon: const Icon(Icons.person),
+                                  label: const Text('Gender'),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(36)),
                                 )),
@@ -179,31 +195,14 @@ class _SignLogState extends State<SignLog> {
                               height: 55,
                             ),
                             ElevatedButton(
-                                onPressed: next,
+                                onPressed: SignUp,
                                 style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(22)),
                                     backgroundColor: const Color.fromRGBO(
                                         68, 149, 250, 1.0)),
-                                child: const Text('Next')),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text("Already a User ?"),
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacement(context,
-                                          MaterialPageRoute(builder: (ctx) {
-                                        return const LogSign();
-                                      }));
-                                    },
-                                    child: const Text('Login'))
-                              ],
-                            )
+                                child: const Text('SignUp')),
                           ],
                         ),
                       ),

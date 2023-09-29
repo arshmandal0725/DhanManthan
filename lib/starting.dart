@@ -21,9 +21,9 @@ class _LoginSignUpState extends State<LoginSignUp> {
               color: Colors.white,
               child: Center(
                 child: SizedBox(
-                  height: 210,
+                  height: 180,
                   child: Image.asset(
-                    'assets/images/dhan_manthan-removebg-preview (1).png',
+                    'assets/images/dhan_manthan__3_-removebg-preview.png',
                     fit: BoxFit.contain,
                   ),
                 ),

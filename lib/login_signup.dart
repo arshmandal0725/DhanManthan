@@ -29,7 +29,7 @@ class _LogSignState extends State<LogSign> {
               .signInWithEmailAndPassword(
                   email: _emailAdress!, password: _passWord!)
               .then((value) {
-            Get.off(()=>const HomeScreen());
+            Get.off(() => const HomeScreen());
           });
         } on FirebaseAuthException catch (error) {
           Get.snackbar('Error Occurred', '${error.message}');
@@ -99,89 +99,93 @@ class _LogSignState extends State<LogSign> {
                 child: Form(
                   key: _formKey,
                   child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        TextFormField(
-                          validator: (value) {
-                            if (value == null ||
-                                value.isEmpty ||
-                                !value.contains('@')) {
-                              return 'Enter Vallid Email Adress';
-                            }
-                            return null;
-                          },
-                          onSaved: (newValue) {
-                            _emailAdress = newValue;
-                          },
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: const Color.fromARGB(76, 236, 233, 233),
-                            prefixIcon:
-                                const Icon(Icons.account_circle_outlined),
-                            label: const Text('Email'),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(36)),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 35,
-                        ),
-                        TextFormField(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          TextFormField(
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty ||
-                                  value.length < 6) {
-                                return 'Enter Vallid PassWord';
+                                  !value.contains('@')) {
+                                return 'Enter Vallid Email Adress';
                               }
                               return null;
                             },
                             onSaved: (newValue) {
-                              _passWord = newValue;
+                              _emailAdress = newValue;
                             },
                             decoration: InputDecoration(
-                              suffixIcon:
-                                  const Icon(Icons.remove_red_eye_outlined),
                               filled: true,
                               fillColor:
                                   const Color.fromARGB(76, 236, 233, 233),
-                              prefixIcon: const Icon(Icons.lock_outlined),
-                              label: const Text('Password'),
+                              prefixIcon:
+                                  const Icon(Icons.account_circle_outlined),
+                              label: const Text('Email'),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(36)),
-                            )),
-                        const SizedBox(
-                          height: 55,
-                        ),
-                        ElevatedButton(
-                            onPressed: login,
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(22)),
-                                backgroundColor:
-                                    const Color.fromRGBO(68, 149, 250, 1.0)),
-                            child: const Text('Login')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("New User?"),
-                            const SizedBox(
-                              width: 5,
                             ),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pushReplacement(context,
-                                      MaterialPageRoute(builder: (ctx) {
-                                    return const SignLog();
-                                  }));
-                                },
-                                child: const Text('SignUp'))
-                          ],
-                        )
-                      ],
+                          ),
+                          const SizedBox(
+                            height: 35,
+                          ),
+                          TextFormField(
+                              validator: (value) {
+                                if (value == null ||
+                                    value.isEmpty ||
+                                    value.length < 6) {
+                                  return 'Enter Vallid PassWord';
+                                }
+                                return null;
+                              },
+                              onSaved: (newValue) {
+                                _passWord = newValue;
+                              },
+                              decoration: InputDecoration(
+                                suffixIcon:
+                                    const Icon(Icons.remove_red_eye_outlined),
+                                filled: true,
+                                fillColor:
+                                    const Color.fromARGB(76, 236, 233, 233),
+                                prefixIcon: const Icon(Icons.lock_outlined),
+                                label: const Text('Password'),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(36)),
+                              )),
+                          const SizedBox(
+                            height: 55,
+                          ),
+                          ElevatedButton(
+                              onPressed: login,
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(22)),
+                                  backgroundColor:
+                                      const Color.fromRGBO(68, 149, 250, 1.0)),
+                              child: const Text('Login')),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("New User?"),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(context,
+                                        MaterialPageRoute(builder: (ctx) {
+                                      return const SignLog();
+                                    }));
+                                  },
+                                  child: const Text('SignUp'))
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
