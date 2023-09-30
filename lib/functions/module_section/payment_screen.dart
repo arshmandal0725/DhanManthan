@@ -1,4 +1,4 @@
-import 'package:dhan_manthan/functions/become_consultant.dart/modules_section.dart';
+import 'package:dhan_manthan/functions/become_mentor/modules_section.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:upi_india/upi_india.dart';

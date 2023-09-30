@@ -1,37 +1,46 @@
+import 'dart:async';
+
+import 'package:dhan_manthan/Providers/manthan_points.dart';
 import 'package:dhan_manthan/functions/annonimous_chat.dart/chating_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChatSection extends StatefulWidget {
+class ChatSection extends ConsumerStatefulWidget {
   const ChatSection({super.key});
 
   @override
-  State<ChatSection> createState() => _ChatSectionState();
+  ConsumerState<ChatSection> createState() => _ChatSectionState();
 }
 
 final _formKey = GlobalKey<FormState>();
 final _messageEditingController = TextEditingController();
 String doubt = '';
 List<Chats> chattingList = [
-  const Chats(
+  Chats(
       chat: 'ABCD',
       type: 'going',
-      image: 'assets/images/9308bbc2-4058-4f60-bf12-0cf66c669a66.png'),
-  const Chats(
+      image: 'assets/images/9308bbc2-4058-4f60-bf12-0cf66c669a66.png',
+      satisfied: false),
+  Chats(
       chat: 'EFGH',
       type: 'coming',
-      image: 'assets/images/9308bbc2-4058-4f60-bf12-0cf66c669a66.png'),
-  const Chats(
+      image: 'assets/images/9308bbc2-4058-4f60-bf12-0cf66c669a66.png',
+      satisfied: false),
+  Chats(
       chat: 'IJKL',
       type: 'coming',
-      image: 'assets/images/9308bbc2-4058-4f60-bf12-0cf66c669a66.png'),
+      image: 'assets/images/9308bbc2-4058-4f60-bf12-0cf66c669a66.png',
+      satisfied: false),
 ];
 
-class _ChatSectionState extends State<ChatSection> {
+class _ChatSectionState extends ConsumerState<ChatSection> {
   void addDoubt(String doub) {
     chattingList.add(Chats(
         chat: doubt,
         type: 'going',
-        image: 'assets/images/9308bbc2-4058-4f60-bf12-0cf66c669a66.png'));
+        image: 'assets/images/9308bbc2-4058-4f60-bf12-0cf66c669a66.png',
+        satisfied: false));
     setState(() {});
   }
 
@@ -154,40 +163,80 @@ class _ChatSectionState extends State<ChatSection> {
                           ),
                         );
                       } else {
-                        return Align(
-                          alignment: Alignment.topRight,
-                          child: Column(
-                            children: [
-                              Container(
-                                  decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                          255, 167, 214, 252),
-                                      borderRadius: BorderRadius.circular(48)),
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.6,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.06,
-                                  child: Row(
-                                    children: [
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      CircleAvatar(
-                                        radius: 15,
-                                        backgroundImage: AssetImage(e.image),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        e.chat,
-                                      ),
-                                    ],
-                                  )),
-                              const SizedBox(
-                                height: 10,
-                              )
-                            ],
+                        return InkWell(
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: (!e.satisfied)
+                                      ? () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (ctx) {
+                                                return AlertDialog(
+                                                  title: const Text(
+                                                      'Have You Got your answer?'),
+                                                  actions: [
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            e.satisfied = true;
+                                                          });
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child:
+                                                            const Text('Yes')),
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: const Text('No'))
+                                                  ],
+                                                );
+                                              });
+                                        }
+                                      : null,
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          color: (e.satisfied)
+                                              ? const Color.fromARGB(
+                                                  255, 81, 124, 83)
+                                              : const Color.fromARGB(
+                                                  255, 167, 214, 252),
+                                          borderRadius:
+                                              BorderRadius.circular(48)),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.6,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.06,
+                                      child: Row(
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          CircleAvatar(
+                                            radius: 15,
+                                            backgroundImage:
+                                                AssetImage(e.image),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            e.chat,
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                )
+                              ],
+                            ),
                           ),
                         );
                       }
@@ -220,6 +269,13 @@ class _ChatSectionState extends State<ChatSection> {
                           _formKey.currentState!.save();
                           addDoubt(doubt);
                           _messageEditingController.clear();
+                          Timer(const Duration(milliseconds: 5), () {
+                            Get.snackbar('Hurrayy....!',
+                                'You got 5 points for asking doubt');
+                            ref
+                                .read(manthanPointsProvider.notifier)
+                                .manthanPointsAdd(5);
+                          });
                         }
                       },
                       icon: const Icon(

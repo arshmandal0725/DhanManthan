@@ -1,3 +1,4 @@
+import 'package:dhan_manthan/Providers/manthan_points.dart';
 import 'package:dhan_manthan/functions/annonimous_chat.dart/chat_section.dart';
 import 'package:dhan_manthan/tabs.dart/consultant.dart';
 import 'package:dhan_manthan/tabs.dart/home_page.dart';
@@ -6,13 +7,14 @@ import 'package:dhan_manthan/tabs.dart/profilepage.dart';
 import 'package:dhan_manthan/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
 bool type = false;
@@ -24,7 +26,8 @@ final iconList = [
 ];
 var _bottomNavIndex = 0;
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  
   @override
   Widget build(BuildContext context) {
     final tabs = [

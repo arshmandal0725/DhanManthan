@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dhan_manthan/Providers/mentor_controller.dart';
 import 'package:dhan_manthan/functions/debt_tracker/debt_homescreen.dart';
 import 'package:dhan_manthan/functions/module_section/payment_screen.dart';
@@ -5,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:dhan_manthan/functions/expense_tracker.dart/expense_homescreen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dhan_manthan/Providers/manthan_points.dart';
+import 'package:get/get.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key, required this.userType});
@@ -16,8 +20,18 @@ class HomePage extends ConsumerStatefulWidget {
 
 int manthanPoints = 0;
 
-
 class _HomePageState extends ConsumerState<HomePage> {
+  @override
+  void initState() {
+    Timer(const Duration(milliseconds: 5), () {
+      Get.snackbar("Hurrayy..!", "You got 5 points for visiting");
+    });
+    Timer(const Duration(seconds: 2), () {
+      ref.read(manthanPointsProvider.notifier).manthanPointsAdd(5);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget mentor = ref.watch(mentorProvider);
@@ -49,7 +63,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                             ),
                             const Text(':  '),
                             Text(
-                              '$manthanPoints',
+                              '${ref.watch(manthanPointsProvider)}',
                             ),
                           ],
                         ),

@@ -1,5 +1,5 @@
-import 'package:dhan_manthan/functions/become_consultant.dart/content_module.dart';
-import 'package:dhan_manthan/functions/become_consultant.dart/list_modules.dart';
+import 'package:dhan_manthan/functions/become_mentor/content_module.dart';
+import 'package:dhan_manthan/functions/become_mentor/list_modules.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';

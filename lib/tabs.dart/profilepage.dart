@@ -1,7 +1,8 @@
 import 'package:dhan_manthan/Providers/mentor_controller.dart';
-import 'package:dhan_manthan/functions/become_consultant.dart/verify.dart';
+import 'package:dhan_manthan/functions/become_mentor/verify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dhan_manthan/Providers/mentor_points.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({
@@ -16,66 +17,66 @@ Widget widget = Container();
 bool user = false;
 Widget? button;
 int mentorPoints = 0;
-Widget _mentor = Container(
-  height: double.infinity,
-  width: 52,
-  decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(22),
-    color: const Color.fromARGB(255, 158, 211, 255),
-  ),
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      SizedBox(
-          height: 20,
-          child: Image.asset(
-              'assets/images/a57bbd9c-4117-42ee-829e-ecff55aa8139.png')),
-      const Text(':  '),
-      Text(
-        '$mentorPoints',
-      ),
-    ],
-  ),
-);
 
 class _ProfilePageState extends ConsumerState<ProfilePage> {
-  void show() {
-    showDialog(
-        context: context,
-        builder: (ctx) {
-          return AlertDialog(
-            content: const Text('Choose How You want to earn'),
-            actions: [
-              TextButton(
-                child: const Text('As Mentor'),
-                onPressed: () {
-                  user = true;
-                  ref.read(mentorProvider.notifier).mentorChange(_mentor);
-                  widget = const Text(
-                    'Alpha User',
-                    style: TextStyle(fontSize: 20),
-                  );
-
-                  setState(() {});
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: const Text('As Consultant'),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (ctx) {
-                    return const VerifyConsultant();
-                  }));
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-              )
-            ],
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
+    Widget _mentor = Container(
+      height: double.infinity,
+      width: 52,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(22),
+        color: const Color.fromARGB(255, 158, 211, 255),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+              height: 20,
+              child: Image.asset(
+                  'assets/images/a57bbd9c-4117-42ee-829e-ecff55aa8139.png')),
+          const Text(' :  '),
+          Text(
+            '${ref.watch(mentorPointsProvider)}',
+          ),
+        ],
+      ),
+    );
+    void show() {
+      showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              content: const Text('Choose How You want to earn'),
+              actions: [
+                TextButton(
+                  child: const Text('As Mentor'),
+                  onPressed: () {
+                    user = true;
+                    ref.read(mentorProvider.notifier).mentorChange(_mentor);
+                    widget = const Text(
+                      'Alpha User',
+                      style: TextStyle(fontSize: 20),
+                    );
+
+                    setState(() {});
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: const Text('As Consultant'),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+                      return const VerifyConsultant();
+                    }));
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                )
+              ],
+            );
+          });
+    }
+
     if (user) {
       button = const SizedBox();
     } else {
