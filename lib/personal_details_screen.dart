@@ -20,6 +20,7 @@ final _formKey = GlobalKey<FormState>();
 String? _name;
 String? _phoneNumber;
 String? _gender;
+var user = '';
 final auth = FirebaseAuth.instance;
 
 class _PersonalDataState extends State<PersonalData> {
@@ -32,6 +33,7 @@ class _PersonalDataState extends State<PersonalData> {
           'phone number': _phoneNumber,
           'gender': _gender,
           'modules': 0,
+          'payment': 'NO',
           'email': widget.emailAdress,
         }));
   }
@@ -50,6 +52,7 @@ class _PersonalDataState extends State<PersonalData> {
             storeData();
             Get.off(() => const HomeScreen());
           });
+          print(userCredentials);
         } on FirebaseAuthException catch (error) {
           Get.snackbar('Error Occurred', '${error.message}');
         }

@@ -1,24 +1,65 @@
+import 'package:dhan_manthan/Providers/mentor_controller.dart';
 import 'package:dhan_manthan/functions/debt_tracker/debt_homescreen.dart';
+import 'package:dhan_manthan/functions/module_section/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dhan_manthan/functions/expense_tracker.dart/expense_homescreen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends ConsumerStatefulWidget {
+  const HomePage({super.key, required this.userType});
+  final bool userType;
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+int manthanPoints = 0;
+
+
+class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
+    Widget mentor = ref.watch(mentorProvider);
     return SingleChildScrollView(
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.only(top: 25),
+          padding: const EdgeInsets.only(top: 10),
           child: Column(
             children: [
+              Container(
+                height: 30,
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: double.infinity,
+                        width: 52,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(22),
+                          color: const Color.fromARGB(255, 158, 211, 255),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            const Text(':  '),
+                            Text(
+                              '$manthanPoints',
+                            ),
+                          ],
+                        ),
+                      ),
+                      mentor
+                    ]),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
               CarouselSlider(
                   items: [1, 2, 3, 4, 5].map((i) {
                     return Builder(
@@ -91,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 15,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -175,7 +216,12 @@ class _HomePageState extends State<HomePage> {
                           height: MediaQuery.of(context).size.height * 0.09,
                           width: MediaQuery.of(context).size.width * 0.25,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (ctx) {
+                                return const UpiPayment();
+                              }));
+                            },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor:
                                     const Color.fromARGB(255, 121, 181, 255),

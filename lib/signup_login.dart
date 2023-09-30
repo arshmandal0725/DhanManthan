@@ -1,4 +1,4 @@
-import 'package:dhan_manthan/homeScreen.dart';
+
 import 'package:dhan_manthan/login_signup.dart';
 import 'package:dhan_manthan/personal_details_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';

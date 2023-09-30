@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+bool type = false;
 final iconList = [
   Icons.home,
   Icons.people,
@@ -23,16 +24,15 @@ final iconList = [
 ];
 var _bottomNavIndex = 0;
 
-final tabs = [
-  const HomePage(),
-  const ConsultantPage(),
-  const NewsPage(),
-  const ProfilePage()
-];
-
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final tabs = [
+      HomePage(userType: type),
+      const ConsultantPage(),
+      const NewsPage(),
+      const ProfilePage()
+    ];
     return SafeArea(
       child: Scaffold(
           appBar: PreferredSize(
