@@ -4,6 +4,7 @@ import 'package:dhan_manthan/Providers/mentor_controller.dart';
 import 'package:dhan_manthan/Providers/mentor_points.dart';
 import 'package:dhan_manthan/functions/debt_tracker/debt_homescreen.dart';
 import 'package:dhan_manthan/functions/module_section/payment_screen.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:dhan_manthan/functions/expense_tracker.dart/expense_homescreen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -94,8 +95,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                               children: [
                                 Center(
                                   child: Image.asset((i == 1)
-                                      ? 'assets/images/9070e74c-e120-4ae8-a15f-3e8f657f1642.png'
-                                      : 'assets/images/7b6f8bdf-b76e-4e95-8b9a-886a13f4acae.png'),
+                                      ? 'assets/images/42f915a8-c36a-46ae-9935-73bbd3c6dade.png'
+                                      : (i == 2)
+                                          ? 'assets/images/613e0e02-33ba-41e2-8502-e200262fe4d5.png'
+                                          : (i == 3)
+                                              ? 'assets/images/9070e74c-e120-4ae8-a15f-3e8f657f1642.png'
+                                              : (i == 4)
+                                                  ? 'assets/images/7b6f8bdf-b76e-4e95-8b9a-886a13f4acae.png'
+                                                  : 'assets/images/d964555c-1d0d-47d6-ae8e-e2c36529c9df.png'),
                                 ),
                                 Positioned(
                                   bottom: 0,
@@ -104,13 +111,47 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   child: Container(
                                     height: 70,
                                     color: Colors.white60,
-                                    child: const Center(
-                                      child: Text(
-                                        'Content Inside',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
+                                    child: Center(
+                                      child: (i == 1)
+                                          ? const Text(
+                                              'Become a mentor',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20),
+                                            )
+                                          : (i == 2)
+                                              ? const Text(
+                                                  'Earn money with us',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
+                                                )
+                                              : (i == 3)
+                                                  ? const Text(
+                                                      'Be aware of scams',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20),
+                                                    )
+                                                  : (i == 4)
+                                                      ? const Text(
+                                                          'Collect points to win goodies',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 20),
+                                                        )
+                                                      : const Text(
+                                                          'Play quizz to earn points',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 20),
+                                                        ),
                                     ),
                                   ),
                                 )
@@ -140,16 +181,30 @@ class _HomePageState extends ConsumerState<HomePage> {
                 height: 20,
               ),
               Container(
-                height: 200,
-                width: 400,
-                color: const Color.fromARGB(255, 190, 221, 247),
-                child: const Center(
-                  child: Text(
-                    'Yaha Graph Ayga',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                  ),
-                ),
-              ),
+                  height: 200,
+                  width: 340,
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 160, 203, 255),
+                      borderRadius: BorderRadius.circular(22)),
+                  child: LineChart(
+                    LineChartData(
+                        minX: 1,
+                        maxX: 12,
+                        minY: 0,
+                        maxY: 100,
+                        lineBarsData: [
+                          LineChartBarData(spots: [
+                            const FlSpot(1, 50),
+                            const FlSpot(2, 30),
+                            const FlSpot(3, 60),
+                            const FlSpot(4, 40),
+                            const FlSpot(5, 20),
+                            const FlSpot(6, 10),
+                            const FlSpot(7, 80),
+                            const FlSpot(8, 90)
+                          ])
+                        ]),
+                  )),
               const SizedBox(
                 height: 15,
               ),

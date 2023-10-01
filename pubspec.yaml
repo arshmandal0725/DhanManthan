@@ -53,6 +53,7 @@ dependencies:
   riverpod: ^2.4.1
   flutter_riverpod: ^2.4.1
   msh_checkbox: ^2.0.1
+  fl_chart: ^0.63.0
   
   
   
@@ -96,6 +97,9 @@ flutter:
     - assets/images/dhan_manthan__3_-removebg-preview.png
     - assets/images/22acaa70-2890-4e0d-8dac-26fafd2c766a.png
     - assets/images/d964555c-1d0d-47d6-ae8e-e2c36529c9df.png
+    - assets/images/42f915a8-c36a-46ae-9935-73bbd3c6dade.png
+    - assets/images/613e0e02-33ba-41e2-8502-e200262fe4d5.png
+    - assets/images/a1173ba5-3000-4d2d-a821-81a469010b0f.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
