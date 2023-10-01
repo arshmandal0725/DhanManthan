@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import 'package:dhan_manthan/functions/quiz.dart/qb.dart';
-import 'package:dhan_manthan/functions/quiz.dart/question_summary.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen(this.func, this.choosenans, {super.key});
@@ -45,16 +44,17 @@ class ResultScreen extends StatelessWidget {
             const SizedBox(
               height: 40,
             ),
-            QuestionSummary(getData()),
             const SizedBox(
               height: 50,
             ),
             ElevatedButton.icon(
                 onPressed: func,
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(400, 300, 200, 100)),
-                icon: const Icon(Icons.restart_alt_rounded),
-                label: const Text("Restart Quiz"))
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(22)),
+                    backgroundColor: const Color.fromRGBO(68, 149, 250, 1.0)),
+                icon: const Icon(Icons.done),
+                label: const Text("Submit"))
           ]),
     );
   }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dhan_manthan/Providers/mentor_controller.dart';
+import 'package:dhan_manthan/Providers/mentor_points.dart';
 import 'package:dhan_manthan/functions/debt_tracker/debt_homescreen.dart';
 import 'package:dhan_manthan/functions/module_section/payment_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,16 +20,20 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 int manthanPoints = 0;
+int times = 0;
 
 class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
-    Timer(const Duration(milliseconds: 5), () {
-      Get.snackbar("Hurrayy..!", "You got 5 points for visiting");
-    });
-    Timer(const Duration(seconds: 2), () {
-      ref.read(manthanPointsProvider.notifier).manthanPointsAdd(5);
-    });
+    if (times == 0) {
+      Timer(const Duration(milliseconds: 5), () {
+        Get.snackbar("Hurrayy..!", "You got 5 points for visiting");
+      });
+      Timer(const Duration(seconds: 2), () {
+        ref.read(manthanPointsProvider.notifier).manthanPointsAdd(5);
+      });
+    }
+    times++;
     super.initState();
   }
 

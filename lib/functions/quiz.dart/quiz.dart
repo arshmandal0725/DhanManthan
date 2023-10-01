@@ -1,18 +1,23 @@
+import 'package:dhan_manthan/Providers/manthan_points.dart';
+import 'package:dhan_manthan/Providers/mentor_controller.dart';
+import 'package:dhan_manthan/Providers/mentor_points.dart';
 import 'package:flutter/material.dart';
 import 'package:dhan_manthan/functions/quiz.dart/first_screen.dart';
 import 'package:dhan_manthan/functions/quiz.dart/result_screen.dart';
 import 'package:dhan_manthan/functions/quiz.dart/second_screen.dart';
 import 'package:dhan_manthan/functions/quiz.dart/qb.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Quiz extends StatefulWidget {
-  const Quiz({super.key});
+class Quiz extends ConsumerStatefulWidget {
+  Quiz({super.key, required this.offQuiz});
+  final void Function() offQuiz;
   @override
-  State<Quiz> createState() {
+  ConsumerState<Quiz> createState() {
     return QuizState();
   }
 }
 
-class QuizState extends State<Quiz> {
+class QuizState extends ConsumerState<Quiz> {
   var x = 0;
   List<String> selectedans = [];
 
@@ -23,10 +28,34 @@ class QuizState extends State<Quiz> {
   }
 
   void restart() {
-    setState(() {
-      selectedans = [];
-      x = 0;
-    });
+    Navigator.pop(context);
+    widget.offQuiz;
+    if (ref.watch(ismentorProvider)) {
+      ref.read(mentorPointsProvider.notifier).mentorPointsAdd(10);
+      ref.read(mentorProvider.notifier).mentorChange(Container(
+            height: double.infinity,
+            width: 52,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(22),
+              color: const Color.fromARGB(255, 158, 211, 255),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                    height: 20,
+                    child: Image.asset(
+                        'assets/images/a57bbd9c-4117-42ee-829e-ecff55aa8139.png')),
+                const Text(' :  '),
+                Text(
+                  '${ref.watch(mentorPointsProvider)}',
+                ),
+              ],
+            ),
+          ));
+    } else {
+      ref.read(manthanPointsProvider.notifier).manthanPointsAdd(10);
+    }
   }
 
   void select(String answer) {

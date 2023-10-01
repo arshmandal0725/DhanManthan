@@ -54,6 +54,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   onPressed: () {
                     user = true;
                     ref.read(mentorProvider.notifier).mentorChange(_mentor);
+                    ref.read(ismentorProvider.notifier).ismentor(true);
                     widget = const Text(
                       'Alpha User',
                       style: TextStyle(fontSize: 20),

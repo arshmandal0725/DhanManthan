@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dhan_manthan/Providers/manthan_points.dart';
 import 'package:dhan_manthan/functions/annonimous_chat.dart/chat_section.dart';
 import 'package:dhan_manthan/tabs.dart/consultant.dart';
@@ -27,9 +29,18 @@ final iconList = [
 var _bottomNavIndex = 0;
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  
   @override
   Widget build(BuildContext context) {
+    void initState() {
+      Timer(const Duration(milliseconds: 5), () {
+        Get.snackbar("Hurrayy..!", "You got 5 points for visiting");
+      });
+      Timer(const Duration(seconds: 2), () {
+        ref.read(manthanPointsProvider.notifier).manthanPointsAdd(5);
+      });
+      super.initState();
+    }
+
     final tabs = [
       HomePage(userType: type),
       const ConsultantPage(),

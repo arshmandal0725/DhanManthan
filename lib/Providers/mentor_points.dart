@@ -4,6 +4,7 @@ class MentorPointsNotifier extends StateNotifier<int> {
   MentorPointsNotifier() : super(0);
   void mentorPointsAdd(int points) {
     state = state + points;
+    
   }
 }
 

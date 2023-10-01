@@ -13,16 +13,19 @@ class UnderContent extends StatefulWidget {
   State<UnderContent> createState() => _UnderContentState();
 }
 
-int moduleCount = 0;
-Widget button = Container();
-
 class _UnderContentState extends State<UnderContent> {
+  void change() {
+    widget.module.moduleCount = 0;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (moduleCount == 4) {
+    Widget button = Container();
+    if (widget.module.moduleCount == 4) {
       button = ElevatedButton(
           onPressed: () {
-            Get.off(() => const Quiz());
+            Get.off(() => Quiz(offQuiz: change));
           },
           style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
@@ -157,7 +160,7 @@ class _UnderContentState extends State<UnderContent> {
                                 onChanged: (!ee[1])
                                     ? (selected) {
                                         setState(() {
-                                          moduleCount++;
+                                          widget.module.moduleCount++;
                                           ee[1] = selected;
                                         });
                                       }
